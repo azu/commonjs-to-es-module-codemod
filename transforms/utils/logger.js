@@ -1,5 +1,3 @@
-/* global console */
-
 class Logger {
   constructor(file, options) {
     this.prefix = `${file.path}:`
@@ -14,6 +12,19 @@ class Logger {
 
   warn(...text) {
     if(!this.silent) console.warn('[WARNING]', this.prefix, ...text)
+  }
+
+  /**
+   * Show lines in the form (<start> to <end>) from a node.
+   *
+   * @param {Node} node
+   * @return {String}
+   */
+  lines(node) {
+    if (node.loc) {
+      return `(${node.loc.start.line} to ${node.loc.end.line})`
+    }
+    return ''
   }
 }
 
