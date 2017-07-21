@@ -1,4 +1,4 @@
-const defineTest = require('jscodeshift/dist/testUtils').defineTest;
+import {defineTest} from "jscodeshift/dist/testUtils";
 
 describe('single-require', () => {
     defineTest(__dirname, 'single-require');

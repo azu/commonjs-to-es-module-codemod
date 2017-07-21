@@ -1,5 +1,5 @@
-const j = require('jscodeshift')
+import j from 'jscodeshift'
 
 const isTopNode = (path) => j.Program.check(path.parent.value)
 
-module.exports = { isTopNode }
+export { isTopNode }

@@ -10,11 +10,9 @@
  * Only on global context
  */
 
-// on https://astexplorer.net: Press ctrl+space for code completion
+import Logger from './utils/logger'
+import {isTopNode} from './utils/filters'
 
-const Logger = require('./utils/logger')
-
-const {isTopNode} = require('./utils/filters')
 
 function transformer(file, api, options) {
   const j = api.jscodeshift
@@ -39,4 +37,4 @@ function transformer(file, api, options) {
   }).toSource()
 }
 
-module.exports = transformer
+export default transformer
