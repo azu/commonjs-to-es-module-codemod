@@ -1,3 +1,5 @@
+/* global console */
+
 class Logger {
   constructor(file, options) {
     this.prefix = `${file.path}:`

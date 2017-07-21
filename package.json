@@ -5,6 +5,7 @@
   "main": "single-require.js",
   "scripts": {
     "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "test": "jest"
   },
   "repository": {
