@@ -1,9 +1,11 @@
 import {defineTest} from 'jscodeshift/dist/testUtils'
 
 const tests = [
+  'bad-argument',
   'basic-case',
   'chained-requires-with-rest',
   'chained-requires',
+  'too-many-arguments'
 ]
 
 describe('variable-require-to-import-default', () => {

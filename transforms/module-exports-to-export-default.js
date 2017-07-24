@@ -35,7 +35,7 @@ function transformer(file, api, options) {
     }).filter(isTopNode)
 
   if (nodes.length > 1) {
-    logger.error('There should not be more than one `module.exports` declaration in a file. Aborting modification')
+    logger.error('There should not be more than one `module.exports` declaration in a file. Aborting transformation')
     return file.source
   }
 

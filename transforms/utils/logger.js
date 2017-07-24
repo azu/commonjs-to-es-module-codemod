@@ -19,14 +19,17 @@ class Logger {
   }
 
   /**
-   * Show lines in the form (<start> to <end>) from a node.
+   * Show lines in the form (lines <start> to <end>) from a node.
+   * If <start> and <end> correspond to the same line, show (line <start>).
    *
    * @param {Node} node
    * @return {String}
    */
   lines(node) {
     if (node.loc) {
-      return `(${node.loc.start.line} to ${node.loc.end.line})`
+      if (node.loc.start.line === node.loc.end.line)
+        return `(line ${node.loc.start.line})`
+      return `(lines ${node.loc.start.line} to ${node.loc.end.line})`
     }
     return ''
   }

@@ -43,10 +43,21 @@ function transformer(file, api, options) {
           && declaration.init.type === 'CallExpression'
           && declaration.init.callee.name === 'require'){
         const importSpecifier = j.importDefaultSpecifier(declaration.id)
-        if (declaration.init.arguments.length > 1) {
-          logger.warn(`(line ${declaration.loc.start.line}) too many arguments`)
-        }
+
         const sourcePath = declaration.init.arguments.shift()
+
+        if (declaration.init.arguments.length) {
+          logger.error(`${logger.lines(declaration)} too many arguments.`
+                       + 'Aborting transformation')
+          return file.source
+        }
+        if (!j.Literal.check(sourcePath)) {
+          logger.error(`${logger.lines(declaration)} bad argument.`
+                       + 'Expecting a string literal, got '
+                       + j(sourcePath).toSource()
+                       + '`. Aborting transformation')
+          return file.source
+        }
         imports.push(j.importDeclaration([importSpecifier], sourcePath))
       } else {
         rest.push(declaration)
