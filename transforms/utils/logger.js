@@ -14,6 +14,10 @@ class Logger {
     if(!this.silent) console.warn('[WARNING]', this.prefix, ...text)
   }
 
+  error(...text) {
+    if(!this.silent) console.error('[ERROR]', this.prefix, ...text)
+  }
+
   /**
    * Show lines in the form (<start> to <end>) from a node.
    *

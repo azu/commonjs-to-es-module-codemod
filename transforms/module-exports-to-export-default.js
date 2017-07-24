@@ -34,10 +34,12 @@ function transformer(file, api, options) {
       }
     }).filter(isTopNode)
 
-  logger.log(`${nodes.length} nodes will be transformed`)
+  if (nodes.length > 1) {
+    logger.error('There should not be more than one `module.exports` declaration in a file. Aborting modification')
+    return file.source
+  }
 
-  if (nodes.length > 1)
-    logger.warn('There should not be more than one `module.exports` declaration in a file')
+  logger.log(`${nodes.length} nodes will be transformed`)
 
   // ----------------------------------------------------------------- REPLACE
   return nodes.replaceWith(path => {
