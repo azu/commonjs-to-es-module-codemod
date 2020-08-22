@@ -6,6 +6,9 @@
     "transforms"
   ],
   "main": "transforms/index.js",
+  "bin": {
+    "commonjs-to-es-module-codemod": "./bin/cmd.js"
+  },
   "scripts": {
     "test": "jest",
     "updateSnapshot": "jest -u",
@@ -49,6 +52,7 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
+    "codemod-cli": "^3.0.0",
     "jscodeshift": "^0.10.0"
   },
   "prettier": {
