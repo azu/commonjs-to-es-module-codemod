@@ -2,6 +2,16 @@
 
 jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/export) for JavaScript/TypeScript
 
+## Support
+
+### Exports
+
+- ``
+
+### Imports
+
+
+
 ## Installation
 
     npm install commonjs-to-es-module-codemod
