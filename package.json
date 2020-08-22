@@ -6,9 +6,6 @@
     "transforms"
   ],
   "main": "lib/index.js",
-  "bin": {
-    "commonjs-to-es-module-codemod": "./bin/cmd.js"
-  },
   "scripts": {
     "build": "babel transforms/ -d lib",
     "test": "jest",
@@ -54,7 +51,6 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
-    "codemod-cli": "^3.0.0",
     "jscodeshift": "^0.10.0"
   },
   "prettier": {
