@@ -1,8 +1,11 @@
 {
-  "name": "amd2es6-codemod",
+  "name": "@azu/commonjs-to-es-module-codemod",
   "version": "0.0.1",
-  "description": "Codemod using jscodeshift to convert AMD modules to ES6 modules",
-  "main": "single-require.js",
+  "description": "jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/export) for JavaScript/TypeScript",
+  "files": [
+    "transforms"
+  ],
+  "main": "transforms/index.js",
   "scripts": {
     "test": "jest",
     "updateSnapshot": "jest -u",
@@ -10,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/buonomo/amd-to-es6-codemod.git"
+    "url": "git://github.com/azu/commonjs-to-es-module-codemod.git"
   },
   "keywords": [
     "amd",
@@ -23,12 +26,12 @@
     "codemod",
     "jscodeshift"
   ],
-  "author": "Ulysse Buonomo <buonomo.ulysse@gmail.com>",
+  "author": "azu <azuciao@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/buonomo/amd-to-es6-codemod/issues"
+    "url": "https://github.com/azu/commonjs-to-es-module-codemod/issues"
   },
-  "homepage": "https://github.com/buonomo/amd-to-es6-codemod#readme",
+  "homepage": "https://github.com/azu/commonjs-to-es-module-codemod#readme",
   "jest": {
     "roots": [
       "transforms"
