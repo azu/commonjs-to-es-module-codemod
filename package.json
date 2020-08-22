@@ -4,10 +4,9 @@
   "description": "Codemod using jscodeshift to convert AMD modules to ES6 modules",
   "main": "single-require.js",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test": "jest",
-    "test:coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "updateSnapshot": "jest -u",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
   },
   "repository": {
     "type": "git",
@@ -36,14 +35,33 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-jest": "^20.0.3",
-    "babel-preset-es2015": "^6.24.1",
-    "coveralls": "^2.13.1",
-    "eslint": "^4.2.0",
-    "jest": "^20.0.4"
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
+    "coveralls": "^3.1.0",
+    "husky": "^4.2.5",
+    "jest": "^26.4.2",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5"
   },
   "dependencies": {
-    "jscodeshift": "^0.3.32"
+    "jscodeshift": "^0.10.0"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 120,
+    "tabWidth": 4,
+    "trailingComma": "none"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css}": [
+      "prettier --write"
+    ]
   }
 }

@@ -10,31 +10,33 @@
  * Only on global context
  */
 
-import Logger from './utils/logger'
-import {isTopNode} from './utils/filters'
-
+import Logger from "./utils/logger";
+import { isTopNode } from "./utils/filters";
 
 function transformer(file, api, options) {
-  const j = api.jscodeshift
-  const ಠ_ಠ = new Logger(file, options)
+    const j = api.jscodeshift;
+    const ಠ_ಠ = new Logger(file, options);
 
-  // ------------------------------------------------------------------ SEARCH
-  const nodes = j(file.source)
-    .find(j.ExpressionStatement, {
-      expression: {
-        callee: {
-          name: 'require'
-        }
-      }
-    }).filter(isTopNode)
+    // ------------------------------------------------------------------ SEARCH
+    const nodes = j(file.source)
+        .find(j.ExpressionStatement, {
+            expression: {
+                callee: {
+                    name: "require"
+                }
+            }
+        })
+        .filter(isTopNode);
 
-  ಠ_ಠ.log(`${nodes.length} nodes will be transformed`)
+    ಠ_ಠ.log(`${nodes.length} nodes will be transformed`);
 
-  // ----------------------------------------------------------------- REPLACE
-  return nodes.replaceWith(path => {
-    const sourcePath = path.node.expression.arguments.pop()
-    return j.importDeclaration([], sourcePath)
-  }).toSource()
+    // ----------------------------------------------------------------- REPLACE
+    return nodes
+        .replaceWith((path) => {
+            const sourcePath = path.node.expression.arguments.pop();
+            return j.importDeclaration([], sourcePath);
+        })
+        .toSource();
 }
 
-export default transformer
+export default transformer;

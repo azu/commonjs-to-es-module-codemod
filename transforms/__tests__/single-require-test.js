@@ -1,4 +1,3 @@
-import {defineTest} from 'jscodeshift/dist/testUtils'
+import { defineTest } from "jscodeshift/dist/testUtils";
 
-defineTest(__dirname, 'single-require')
-
+defineTest(__dirname, "single-require");
