@@ -48,24 +48,59 @@ function transformer(file, api, options) {
                     declaration.init.type === "CallExpression" &&
                     declaration.init.callee.name === "require"
                 ) {
-                    const importSpecifier = j.importDefaultSpecifier(declaration.id);
+                    try {
+                        if (declaration.id.type === "Identifier") {
+                            // default import
+                            const importSpecifier = j.importDefaultSpecifier(declaration.id);
 
-                    const sourcePath = declaration.init.arguments.shift();
+                            const sourcePath = declaration.init.arguments.shift();
 
-                    if (declaration.init.arguments.length) {
-                        logger.error(`${logger.lines(declaration)} too many arguments.` + "Aborting transformation");
-                        return file.source;
+                            if (declaration.init.arguments.length) {
+                                logger.error(
+                                    `${logger.lines(declaration)} too many arguments.` + "Aborting transformation"
+                                );
+                                return file.source;
+                            }
+                            if (!j.Literal.check(sourcePath)) {
+                                logger.error(
+                                    `${logger.lines(declaration)} bad argument.` +
+                                        "Expecting a string literal, got " +
+                                        j(sourcePath).toSource() +
+                                        "`. Aborting transformation"
+                                );
+                                return file.source;
+                            }
+                            imports.push(j.importDeclaration([importSpecifier], sourcePath));
+                        } else if (declaration.id.type === "ObjectPattern") {
+                            // named import
+                            // const { specifierA, specifierB } = require("mod")
+                            // ObjectPattern
+                            const specifiers = declaration.id.properties.map((property) => {
+                                const key = j.identifier(property.key.name);
+                                const value = j.identifier(property.value.name);
+                                return j.importSpecifier(key, value);
+                            });
+                            const sourcePath = declaration.init.arguments.shift();
+                            if (declaration.init.arguments.length) {
+                                logger.error(
+                                    `${logger.lines(declaration)} too many arguments.` + "Aborting transformation"
+                                );
+                                return file.source;
+                            }
+                            if (!j.Literal.check(sourcePath)) {
+                                logger.error(
+                                    `${logger.lines(declaration)} bad argument.` +
+                                        "Expecting a string literal, got " +
+                                        j(sourcePath).toSource() +
+                                        "`. Aborting transformation"
+                                );
+                                return file.source;
+                            }
+                            imports.push(j.importDeclaration(specifiers, sourcePath));
+                        }
+                    } catch (error) {
+                        logger.error(file.path, error);
                     }
-                    if (!j.Literal.check(sourcePath)) {
-                        logger.error(
-                            `${logger.lines(declaration)} bad argument.` +
-                                "Expecting a string literal, got " +
-                                j(sourcePath).toSource() +
-                                "`. Aborting transformation"
-                        );
-                        return file.source;
-                    }
-                    imports.push(j.importDeclaration([importSpecifier], sourcePath));
                 } else {
                     rest.push(declaration);
                 }

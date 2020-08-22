@@ -1,6 +1,6 @@
-const toExportDefault = require("./module-exports-to-export-default");
-const singleRequire = require("./single-require");
-const toImportDefault = require("./variable-require-to-import-default");
+import toImportDefault from "./variable-require-to-import-default";
+import toExportDefault from "./module-exports-to-export-default";
+import singleRequire from "./single-require";
 
 const transformScripts = (fileInfo, api, options) => {
     return [toExportDefault, singleRequire, toImportDefault].reduce((input, script) => {
@@ -13,3 +13,5 @@ const transformScripts = (fileInfo, api, options) => {
         );
     }, fileInfo.source);
 };
+
+module.exports = transformScripts;

@@ -8,7 +8,9 @@ jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/
 
 ## Usage
 
-- [ ] Write usage instructions
+Convert files in `src/**/*` to ES modules codes.
+
+    npx commonjs-to-es-module-codemod "src/**/*"
 
 ## Tests
 
