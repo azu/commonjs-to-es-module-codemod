@@ -5,11 +5,12 @@
   "files": [
     "transforms"
   ],
-  "main": "transforms/index.js",
+  "main": "lib/index.js",
   "bin": {
     "commonjs-to-es-module-codemod": "./bin/cmd.js"
   },
   "scripts": {
+    "build": "babel transforms/ -d lib",
     "test": "jest",
     "updateSnapshot": "jest -u",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@babel/cli": "^7.10.5",
     "@babel/preset-env": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
