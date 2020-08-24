@@ -11,9 +11,9 @@ jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/
 
 ### Imports
 
-- [x] `const mod = require("mod")` to default import
-- [x] `const { mod } = require("mod")` to named import
-- [ ] `const mod = require("mod").mod` to named import
+- [x] `const foo = require("mod")` to default import
+- [x] `const { foo } = require("mod")` to named import
+- [x] `const foo = require("mod").foo` to `import { foo } from "mod"`
 - [ ] `{ prop: require("mod") }`
 
 ## Installation

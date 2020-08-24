@@ -11,8 +11,8 @@ const tests = [
     "destructure-require-alias"
 ];
 
-describe("variable-require-to-import-default", () => {
+describe("require-to-import-default", () => {
     tests.forEach((test) => {
-        defineTest(__dirname, "variable-require-to-import-default", null, `variable-require-to-import-default/${test}`);
+        defineTest(__dirname, "require-to-import-default", null, `require-to-import-default/${test}`);
     });
 });
