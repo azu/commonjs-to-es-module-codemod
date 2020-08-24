@@ -57,7 +57,6 @@ function transformer(file, api, options) {
                     declaration.init.property !== undefined;
                 if (isRequireWithProp) {
                     if (declaration.id.type === "Identifier") {
-                        console.log("declaration.id", declaration.id);
                         const sourcePath = declaration.init.object.arguments.shift();
                         if (declaration.init.object.arguments.length) {
                             logger.error(
@@ -80,7 +79,6 @@ function transformer(file, api, options) {
                         }
                         const propertyId = declaration.init.property;
                         const specify = j.importSpecifier(propertyId, propertyId);
-                        console.log("sp", specify);
                         imports.push(j.importDeclaration([specify], sourcePath));
                     } else if (declaration.id.type === "ObjectPattern") {
                         // named import
