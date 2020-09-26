@@ -47,3 +47,8 @@ MIT © azu
 It includes [BuonOmo/CommonJS-to-ES6-codemod](https://github.com/BuonOmo/CommonJS-to-ES6-codemod).
 
 MIT © Ulysse Buonomo <buonomo.ulysse@gmail.com>
+
+
+## Related
+
+- [lebab/lebab: Turn your ES5 code into readable ES6. Lebab does the opposite of what Babel does.](https://github.com/lebab/lebab)
