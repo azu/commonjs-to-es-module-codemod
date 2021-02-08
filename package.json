@@ -3,13 +3,12 @@
   "version": "0.3.2",
   "description": "jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/export) for JavaScript/TypeScript",
   "files": [
-    "transforms",
-    "!**/__tests__",
-    "!**/__testfixtures__"
+    "dist"
   ],
-  "main": "transforms/index.js",
+  "source": "transforms/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "babel transforms/ -d lib",
+    "build": "microbundle",
     "test": "jest",
     "updateSnapshot": "jest -u",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
@@ -50,10 +49,12 @@
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5",
+    "microbundle": "^0.13.0",
+    "prettier": "^2.0.5"
+  },
+  "dependencies": {
     "jscodeshift": "^0.10.0"
   },
-  "dependencies": {},
   "prettier": {
     "singleQuote": false,
     "printWidth": 120,
