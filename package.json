@@ -4,7 +4,8 @@
   "description": "jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/export) for JavaScript/TypeScript",
   "files": [
     "transforms",
-    "!**/__tests__"
+    "!**/__tests__",
+    "!**/__testfixtures__"
   ],
   "main": "transforms/index.js",
   "scripts": {
