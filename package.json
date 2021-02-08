@@ -1,6 +1,6 @@
 {
   "name": "commonjs-to-es-module-codemod",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/export) for JavaScript/TypeScript",
   "files": [
     "transforms"
@@ -51,8 +51,7 @@
     "prettier": "^2.0.5",
     "jscodeshift": "^0.10.0"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "prettier": {
     "singleQuote": false,
     "printWidth": 120,
