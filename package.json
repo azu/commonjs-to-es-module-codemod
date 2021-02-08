@@ -5,7 +5,7 @@
   "files": [
     "transforms"
   ],
-  "main": "lib/index.js",
+  "main": "transforms/index.js",
   "scripts": {
     "build": "babel transforms/ -d lib",
     "test": "jest",
