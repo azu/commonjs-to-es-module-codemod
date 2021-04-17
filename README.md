@@ -7,6 +7,7 @@ jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/
 ### Exports
 
 - [x] named export: `module.exports.foo = foo` to `export { foo }`
+- [x] named export: `module.exports.bar = foo` to `export { foo as bar }`
 - [x] default export: `module.exports = foo` to `export default foo`
 - [x] ignore multiple `module.exports = x`
 
