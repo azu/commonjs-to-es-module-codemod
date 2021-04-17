@@ -15,6 +15,7 @@ jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/
 - [x] `const foo = require("mod")` to `import foo from "mod"`
 - [x] `const { foo } = require("mod")` to `import { foo } from "mod"`
 - [x] `const foo = require("mod").foo` to `import { foo } from "mod"`
+- [x] `const bar = require("mod").foo` to `import { foo as bar } from "mod"`
 - [ ] `const o = { foo: require("foo") } ` to `import foo from "mod"; const o = { foo }`
 - [ ] Non-root require: `{ prop: require("mod") }`
 
