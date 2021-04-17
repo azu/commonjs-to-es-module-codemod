@@ -54,7 +54,6 @@ function transformer(file, api, options) {
                 if (isRequireWithProp) {
                     if (declaration.id.type === "Identifier") {
                         // default import
-                        const importSpecifier = j.importDefaultSpecifier(declaration.id);
                         const sourcePath = declaration.init.arguments.shift();
                         if (declaration.init.arguments.length) {
                             logger.error(
