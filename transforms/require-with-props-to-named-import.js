@@ -2,10 +2,12 @@
  * Transform
  *
  *   const a = require('lib').a;
+ *   const b = require('lib').a;
  *
  * to
  *
  *   import { a } from 'lib';
+ *   import { a as b } from 'lib';
  *
  * Only on global context
  */
@@ -77,8 +79,7 @@ function transformer(file, api, options) {
                             logger.log("Unknown declaration", declaration);
                             return file.source;
                         }
-                        const propertyId = declaration.init.property;
-                        const specify = j.importSpecifier(propertyId, propertyId);
+                        const specify = j.importSpecifier(declaration.init.property, declaration.id);
                         imports.push(j.importDeclaration([specify], sourcePath));
                     } else if (declaration.id.type === "ObjectPattern") {
                         // named import

@@ -1,6 +1,6 @@
 import { defineTest } from "jscodeshift/dist/testUtils";
 
-const tests = ["basic-case"];
+const tests = ["basic-case", "alias"];
 
 describe("require-with-props-to-named-import", () => {
     tests.forEach((test) => {
