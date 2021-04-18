@@ -32,7 +32,6 @@ Convert files in `index.js` and `index.ts` to ES modules codes using [jscodeshif
     # Transform TypeScript
     jscodeshift -t "https://unpkg.com/commonjs-to-es-module-codemod@${LATEST_VERSION}/dist/index.js" --extensions ts "index.ts"
 
-
 Convert `src/*.js`:
 
     LATEST_VERSION=$(npm view commonjs-to-es-module-codemod version)
