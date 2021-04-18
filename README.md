@@ -27,7 +27,9 @@ Convert files in `src/**/*` to ES modules codes using [jscodeshift](https://gith
     # Install jscodeshift
     npm install --global jscodeshift
     # Transform
-    jscodeshift -t https://unpkg.com/commonjs-to-es-module-codemod@0.4.2/dist/index.js "src/**/*.{ts,js}"
+    jscodeshift -t https://unpkg.com/commonjs-to-es-module-codemod@0.4.2/dist/index.js "index.js"
+    # Transform TypeScript
+    jscodeshift -t https://unpkg.com/commonjs-to-es-module-codemod@0.4.2/dist/index.js --extensions ts "index.ts"
 
 ## Tests
 
