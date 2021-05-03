@@ -18,11 +18,10 @@ jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/
 - [x] `const foo = require("mod").foo` to `import { foo } from "mod"`
 - [x] `const bar = require("mod").foo` to `import { foo as bar } from "mod"`
 - [ ] `const o = { foo: require("foo") } ` to `import foo from "mod"; const o = { foo }`
-- [ ] Non-root require: `{ prop: require("mod") }`
 
 ## Usage
 
-Convert files in `index.js` and `index.ts` to ES modules codes using [jscodeshift](https://github.com/facebook/jscodeshift)
+Convert `index.js` and `index.ts` to ES modules codes using [jscodeshift](https://github.com/facebook/jscodeshift)
 
     # Install jscodeshift
     npm install --global jscodeshift
