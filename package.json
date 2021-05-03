@@ -11,7 +11,7 @@
     "build": "microbundle",
     "test": "jest",
     "updateSnapshot": "jest -u",
-    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
   },
   "repository": {
     "type": "git",
@@ -46,11 +46,10 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
     "coveralls": "^3.1.0",
-    "husky": "^4.2.5",
     "jest": "^26.4.2",
     "lint-staged": "^10.2.11",
     "microbundle": "^0.13.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.2.1"
   },
   "dependencies": {
     "jscodeshift": "^0.10.0"
@@ -60,11 +59,6 @@
     "printWidth": 120,
     "tabWidth": 4,
     "trailingComma": "none"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css}": [
