@@ -19,7 +19,8 @@ function transformer(file, api, options) {
 
     // ------------------------------------------------------------------ SEARCH
     // https://astexplorer.net/#/gist/334f5bd39244c7feab38a3fd3cc0ce7f/c332a5b4cbd1a9718e644febf2dce9e9bd032d1b
-    const nodes = j(file.source)
+    const ast = j(file.source)
+    const moduleExportNodes = ast
         .find(j.ExpressionStatement, {
             expression: {
                 left: {
@@ -38,25 +39,42 @@ function transformer(file, api, options) {
         })
         .filter(isTopNode);
 
-    logger.log(`${nodes.length} nodes will be transformed`);
-
-    // ----------------------------------------------------------------- REPLACE
-    return nodes
-        .replaceWith((path) => {
-            const node = path.node;
-            // Identifier node
-            const id = node.expression.left.property;
-            const init = node.expression.right;
-            // module.export.b = a
-            // → export { a as b }
-            if (id.type === "Identifier" && init.type === "Identifier") {
-                return j.exportNamedDeclaration(null, [j.exportSpecifier(init, id)]);
+    const exportNodes = ast
+        .find(j.ExpressionStatement, {
+            expression: {
+                left: {
+                    object: {
+                        name: "exports"
+                    }
+                    // property is target
+                },
+                operator: "="
             }
-            // https://babeljs.io/docs/en/babel-types#exportnameddeclaration
-            const declaration = j.variableDeclaration("const", [j.variableDeclarator(id, init)]);
-            return j.exportNamedDeclaration(declaration);
         })
-        .toSource();
+        .filter(isTopNode);
+
+    logger.log(`${moduleExportNodes.length + exportNodes.length} nodes will be transformed`);
+    // ----------------------------------------------------------------- REPLACE
+    const replace = (path) => {
+        const node = path.node;
+        // Identifier node
+        const id = node.expression.left.property;
+        const init = node.expression.right;
+        // module.export.b = a
+        // → export { a as b }
+        if (id.type === "Identifier" && init.type === "Identifier") {
+            return j.exportNamedDeclaration(null, [j.exportSpecifier(init, id)]);
+        }
+        // https://babeljs.io/docs/en/babel-types#exportnameddeclaration
+        const declaration = j.variableDeclaration("const", [j.variableDeclarator(id, init)]);
+        return j.exportNamedDeclaration(declaration);
+    }
+
+    exportNodes
+        .replaceWith(replace)
+    moduleExportNodes
+        .replaceWith(replace)
+    return ast.toSource();
 }
 
 export default transformer;
