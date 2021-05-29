@@ -1,6 +1,6 @@
 import { defineTest } from "jscodeshift/dist/testUtils";
 
-const tests = ["basic-case", "exports-variable"];
+const tests = ["basic-case-module-exports", "basic-case-exports", "exports-variable"];
 
 describe("module-exports-to-named-export", () => {
     tests.forEach((test) => {
