@@ -13,6 +13,8 @@ const tests = [
 
 describe("require-to-import-default", () => {
     tests.forEach((test) => {
-        defineTest(__dirname, "require-to-import-default", null, `require-to-import-default/${test}`);
+        defineTest(__dirname, "require-to-import-default", {
+            silent: true
+        }, `require-to-import-default/${test}`);
     });
 });
