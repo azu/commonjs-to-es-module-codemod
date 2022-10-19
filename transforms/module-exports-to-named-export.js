@@ -17,9 +17,17 @@ function transformer(file, api, options) {
     const j = api.jscodeshift;
     const logger = new Logger(file, options);
 
+    const root = j(file.source);
+
+    const getFirstNode = () => root.find(j.Program).get("body", 0).node;
+
+    // Save the comments attached to the first node
+    const firstNodeComments = getFirstNode().comments;
+
+    const ast = root;
+
     // ------------------------------------------------------------------ SEARCH
-    // https://astexplorer.net/#/gist/334f5bd39244c7feab38a3fd3cc0ce7f/c332a5b4cbd1a9718e644febf2dce9e9bd032d1b
-    const ast = j(file.source)
+    const nodes = root;
     const moduleExportNodes = ast
         .find(j.ExpressionStatement, {
             expression: {
@@ -63,18 +71,25 @@ function transformer(file, api, options) {
         // module.export.b = a
         // → export { a as b }
         if (id.type === "Identifier" && init.type === "Identifier") {
-            return j.exportNamedDeclaration(null, [j.exportSpecifier(init, id)]);
+            // Workaround for https://github.com/benjamn/ast-types/issues/425#issuecomment-1007846129
+            const specifier = j.exportSpecifier.from({
+                exported: id,
+                local: init
+            });
+            return j.exportNamedDeclaration(null, [specifier]);
         }
         // https://babeljs.io/docs/en/babel-types#exportnameddeclaration
         const declaration = j.variableDeclaration("const", [j.variableDeclarator(id, init)]);
         return j.exportNamedDeclaration(declaration);
-    }
+    };
 
-    exportNodes
-        .replaceWith(replace)
-    moduleExportNodes
-        .replaceWith(replace)
-    return ast.toSource();
+    exportNodes.replaceWith(replace);
+    moduleExportNodes.replaceWith(replace);
+
+    // Restore comments
+    getFirstNode().comments = firstNodeComments;
+
+    return root.toSource();
 }
 
 export default transformer;

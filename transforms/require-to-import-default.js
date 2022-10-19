@@ -19,8 +19,15 @@ function transformer(file, api, options) {
     const j = api.jscodeshift;
     const logger = new Logger(file, options);
 
+    const root = j(file.source);
+
+    const getFirstNode = () => root.find(j.Program).get("body", 0).node;
+
+    // Save the comments attached to the first node
+    const firstNodeComments = getFirstNode().comments;
+
     // ------------------------------------------------------------------ SEARCH
-    const nodes = j(file.source)
+    const nodes = root
         .find(j.VariableDeclaration, {
             declarations: [
                 {
@@ -39,8 +46,10 @@ function transformer(file, api, options) {
     logger.log(`${nodes.length} nodes will be transformed`);
 
     // ----------------------------------------------------------------- REPLACE
-    return nodes
+    nodes
         .replaceWith((path) => {
+            const comments = path.node.comments;
+
             const rest = [];
             const imports = [];
             for (const declaration of path.node.declarations) {
@@ -74,7 +83,10 @@ function transformer(file, api, options) {
                             logger.log("Unknown declaration", declaration);
                         }
                         const specify = j.importSpecifier(declaration.init.property, declaration?.init?.property);
-                        imports.push(j.importDeclaration([specify], sourcePath));
+
+                        const importDeclaration = j.importDeclaration([specify], sourcePath);
+                        importDeclaration.comments = comments;
+                        imports.push(importDeclaration);
                     } else if (declaration.id.type === "ObjectPattern") {
                         // named import
                         // const { c } = require("mod").a
@@ -84,6 +96,7 @@ function transformer(file, api, options) {
                     if (declaration.id.type === "Identifier") {
                         // default import
                         const importSpecifier = j.importDefaultSpecifier(declaration.id);
+
                         const sourcePath = declaration.init.arguments.shift();
                         if (declaration.init.arguments.length) {
                             logger.error(
@@ -100,7 +113,10 @@ function transformer(file, api, options) {
                             );
                             return file.source;
                         }
-                        imports.push(j.importDeclaration([importSpecifier], sourcePath));
+
+                        const importDeclaration = j.importDeclaration([importSpecifier], sourcePath);
+                        importDeclaration.comments = comments;
+                        imports.push(importDeclaration);
                     } else if (declaration.id.type === "ObjectPattern") {
                         // named import
                         // const { specifierA, specifierB } = require("mod")
@@ -126,7 +142,10 @@ function transformer(file, api, options) {
                             );
                             return file.source;
                         }
-                        imports.push(j.importDeclaration(specifiers, sourcePath));
+
+                        const importDeclaration = j.importDeclaration(specifiers, sourcePath);
+                        importDeclaration.comments = comments;
+                        imports.push(importDeclaration);
                     }
                 } else {
                     rest.push(declaration);
@@ -139,6 +158,11 @@ function transformer(file, api, options) {
             return imports;
         })
         .toSource();
+
+    // Restore comments
+    getFirstNode().comments = firstNodeComments;
+
+    return root.toSource();
 }
 
 export default transformer;

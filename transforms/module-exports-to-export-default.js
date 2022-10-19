@@ -17,8 +17,15 @@ function transformer(file, api, options) {
     const j = api.jscodeshift;
     const logger = new Logger(file, options);
 
+    const root = j(file.source);
+
+    const getFirstNode = () => root.find(j.Program).get("body", 0).node;
+
+    // Save the comments attached to the first node
+    const firstNodeComments = getFirstNode().comments;
+
     // ------------------------------------------------------------------ SEARCH
-    const nodes = j(file.source)
+    const nodes = root
         .find(j.ExpressionStatement, {
             expression: {
                 left: {
@@ -44,11 +51,17 @@ function transformer(file, api, options) {
     logger.log(`${nodes.length} nodes will be transformed`);
 
     // ----------------------------------------------------------------- REPLACE
-    return nodes
-        .replaceWith((path) => {
-            return j.exportDefaultDeclaration(path.node.expression.right);
-        })
-        .toSource();
+    nodes.replaceWith((path) => {
+        const comments = path.node.comments;
+        const declaration = j.exportDefaultDeclaration(path.node.expression.right);
+        declaration.comments = path.node.comments;
+        return declaration;
+    });
+
+    // Restore comments
+    getFirstNode().comments = firstNodeComments;
+
+    return root.toSource();
 }
 
 export default transformer;
