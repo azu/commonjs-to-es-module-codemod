@@ -63,7 +63,7 @@ function transformer(file, api, options) {
         // module.export.b = a
         // → export { a as b }
         if (id.type === "Identifier" && init.type === "Identifier") {
-            return j.exportNamedDeclaration(null, [j.exportSpecifier(init, id)]);
+            return j.exportNamedDeclaration(null, [j.exportSpecifier.from({ exported: init, local: id })]);
         }
         // https://babeljs.io/docs/en/babel-types#exportnameddeclaration
         const declaration = j.variableDeclaration("const", [j.variableDeclarator(id, init)]);
