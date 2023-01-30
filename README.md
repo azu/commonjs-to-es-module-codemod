@@ -2,7 +2,7 @@
 
 jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/export) for JavaScript/TypeScript
 
-## Support
+## Support Patterns
 
 ### Exports
 
@@ -22,11 +22,13 @@ jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/
 
 ## Usage
 
-Convert `index.js` and `index.ts` to ES modules codes using [jscodeshift](https://github.com/facebook/jscodeshift)
+`commonjs-to-es-module-codemod` is published on [npm](https://www.npmjs.com/package/commonjs-to-es-module-codemod).
+
+You can convert `index.js` and `index.ts` to ES Modules using [jscodeshift](https://github.com/facebook/jscodeshift) and [unpkg](https://unpkg.com/).
 
     # Install jscodeshift
     npm install --global jscodeshift
-    # Transform
+    # Transform using latest version
     LATEST_VERSION=$(npm view commonjs-to-es-module-codemod version)
     jscodeshift -t "https://unpkg.com/commonjs-to-es-module-codemod@${LATEST_VERSION}/dist/index.js" "index.js"
     # Transform TypeScript
@@ -36,7 +38,6 @@ Convert `src/*.js`:
 
     LATEST_VERSION=$(npm view commonjs-to-es-module-codemod version)
     find src -name "*.js" | xargs jscodeshift -t "https://unpkg.com/commonjs-to-es-module-codemod@${LATEST_VERSION}/dist/index.js"
-
 
 ## Tests
 
