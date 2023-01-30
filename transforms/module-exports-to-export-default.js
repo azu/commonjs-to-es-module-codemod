@@ -46,6 +46,9 @@ function transformer(file, api, options) {
     // ----------------------------------------------------------------- REPLACE
     return nodes
         .replaceWith((path) => {
+            if (path.node.expression.right.type === 'ObjectExpression') {
+                return j.exportDeclaration(false, path.node.expression.right);
+            }
             return j.exportDefaultDeclaration(path.node.expression.right);
         })
         .toSource();
