@@ -1,4 +1,4 @@
-# commonjs-to-es-module-codemod
+# commonjs-to-es-module-codemod [![Actions Status: test](https://github.com/azu/commonjs-to-es-module-codemod/workflows/test/badge.svg)](https://github.com/azu/commonjs-to-es-module-codemod/actions?query=workflow%3A"test")
 
 jscodeshift codemod that convert CommonJS(require/exports) to ES Modules(import/export) for JavaScript/TypeScript
 
