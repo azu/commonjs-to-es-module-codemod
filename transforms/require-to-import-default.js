@@ -17,6 +17,7 @@ import { isTopNode } from "./utils/filters";
 
 function transformer(file, api, options) {
     const j = api.jscodeshift;
+    const _isTopNode = (path) => isTopNode(j, path);
     const logger = new Logger(file, options);
 
     // ------------------------------------------------------------------ SEARCH
@@ -34,7 +35,7 @@ function transformer(file, api, options) {
                 }
             ]
         })
-        .filter(isTopNode);
+        .filter(_isTopNode);
 
     logger.log(`${nodes.length} nodes will be transformed`);
 

@@ -15,6 +15,7 @@ import { isTopNode } from "./utils/filters";
 
 function transformer(file, api, options) {
     const j = api.jscodeshift;
+    const _isTopNode = (path) => isTopNode(j, path);
     const logger = new Logger(file, options);
 
     // ------------------------------------------------------------------ SEARCH
@@ -32,7 +33,7 @@ function transformer(file, api, options) {
                 operator: "="
             }
         })
-        .filter(isTopNode);
+        .filter(_isTopNode);
 
     if (nodes.length > 1) {
         logger.error(
