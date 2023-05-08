@@ -91,6 +91,11 @@ function transformer(file, api, options) {
                     rest.push(declaration);
                 }
             }
+
+            if (imports.length > 0) {
+                imports[0].comments = path.node.comments;
+            }
+
             if (rest.length > 0) {
                 logger.warn(`${logger.lines(path.node)} introduced leftover`);
                 return [...imports, j.variableDeclaration(path.node.kind, rest)];
