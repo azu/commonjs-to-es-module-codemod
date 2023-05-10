@@ -39,6 +39,10 @@ Convert `src/*.js`:
     LATEST_VERSION=$(npm view commonjs-to-es-module-codemod version)
     find src -name "*.js" | xargs jscodeshift -t "https://unpkg.com/commonjs-to-es-module-codemod@${LATEST_VERSION}/dist/index.js"
 
+## Related
+
+- [azu/eslint-cjs-to-esm: ESLint wrapper for migration from CJS to ESM.](https://github.com/azu/eslint-cjs-to-esm)
+
 ## Tests
 
     yarn test
