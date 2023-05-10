@@ -1,6 +1,7 @@
 exports.a = function () {
   return "a";
 };
+// comment
 exports.b = function () {
   return "b";
 };

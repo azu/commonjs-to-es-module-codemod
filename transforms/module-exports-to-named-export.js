@@ -64,12 +64,16 @@ function transformer(file, api, options) {
         // module.export.b = a
         // → export { a as b }
         if (id.type === "Identifier" && init.type === "Identifier") {
-            return j.exportNamedDeclaration(null, [j.exportSpecifier.from({ exported: id, local: init })]);
+            const newNode = j.exportNamedDeclaration(null, [j.exportSpecifier.from({ exported: id, local: init })]);
+            newNode.comments = node.comments;
+            return newNode;
         }
         // https://babeljs.io/docs/en/babel-types#exportnameddeclaration
         const declaration = j.variableDeclaration("const", [j.variableDeclarator(id, init)]);
-        return j.exportNamedDeclaration(declaration);
-    }
+        const newNode = j.exportNamedDeclaration(declaration);
+        newNode.comments = node.comments;
+        return newNode;
+    };
 
     exportNodes
         .replaceWith(replace)

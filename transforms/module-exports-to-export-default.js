@@ -47,7 +47,9 @@ function transformer(file, api, options) {
     // ----------------------------------------------------------------- REPLACE
     return nodes
         .replaceWith((path) => {
-            return j.exportDefaultDeclaration(path.node.expression.right);
+            const newNode = j.exportDefaultDeclaration(path.node.expression.right);
+            newNode.comments = path.node.comments;
+            return newNode;
         })
         .toSource();
 }

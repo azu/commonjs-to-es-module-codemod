@@ -35,7 +35,9 @@ function transformer(file, api, options) {
     return nodes
         .replaceWith((path) => {
             const sourcePath = path.node.expression.arguments.pop();
-            return j.importDeclaration([], sourcePath);
+            const newNode = j.importDeclaration([], sourcePath);
+            newNode.comments = path.node.comments;
+            return newNode;
         })
         .toSource();
 }
